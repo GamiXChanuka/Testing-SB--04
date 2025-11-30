@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="A modern, user-friendly task management web application">
+    <title>Smart To-Do List</title>
+
+    <!-- Google Fonts - Modern Typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome - Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" integrity="sha512-DTOQO9RWCH3ppGqcWaEA1BIZOC6xxalwEsw9c2QQeAIftl+Vegovlnee1c9QX4TctnWMn13TZye+giMm8e2LwA==" crossorigin="anonymous" referrerpolicy="no-referrer">
+
+    <!-- Main Stylesheet -->
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Main Application Container -->
+    <div class="app-container">
+        <!-- Header Section -->
+        <header class="app-header">
+            <h1>Smart To-Do List</h1>
+            <p class="app-subtitle">Organize your tasks efficiently</p>
+        </header>
+
+        <!-- Main Content Area -->
+        <main class="app-main">
+            <!-- Task Input Area - Placeholder for future add task functionality -->
+            <section class="task-input-section">
+                <!-- Will be populated in a future story with add task controls -->
+            </section>
+
+            <!-- Task List Container -->
+            <section id="task-list-container" class="task-list-container">
+                <!-- Empty State Message -->
+                <div id="empty-state" class="empty-state">
+                    <i class="fas fa-clipboard-list"></i>
+                    <p>No tasks yet. Add your first task above.</p>
+                </div>
+
+                <!-- Task List - Will be dynamically populated -->
+                <ul id="task-list" class="task-list">
+                    <!-- Tasks will be rendered here dynamically by JavaScript -->
+                </ul>
+            </section>
+        </main>
+    </div>
+
+    <!-- Main JavaScript File -->
+    <script src="app.js"></script>
+</body>
+</html>
