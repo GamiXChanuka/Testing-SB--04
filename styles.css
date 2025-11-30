@@ -1,0 +1,241 @@
+/* ============================================
+   Smart To-Do List - Main Stylesheet
+   ============================================ */
+
+/* ============================================
+   CSS Reset & Base Styles
+   ============================================ */
+
+/* Box sizing reset for consistent layout calculations */
+*, *::before, *::after {
+    box-sizing: border-box;
+}
+
+/* Remove default margin and padding */
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/* ============================================
+   CSS Custom Properties (Variables)
+   ============================================ */
+
+:root {
+    /* Color Palette - Modern, clean colors */
+    --color-primary: #4F46E5;
+    --color-primary-dark: #4338CA;
+    --color-secondary: #10B981;
+    --color-danger: #EF4444;
+    --color-warning: #F59E0B;
+    --color-info: #3B82F6;
+
+    /* Background Colors */
+    --color-bg-main: #F9FAFB;
+    --color-bg-card: #FFFFFF;
+    --color-bg-hover: #F3F4F6;
+
+    /* Text Colors */
+    --color-text-primary: #111827;
+    --color-text-secondary: #6B7280;
+    --color-text-muted: #9CA3AF;
+
+    /* Border Colors */
+    --color-border: #E5E7EB;
+    --color-border-focus: #4F46E5;
+
+    /* Priority Colors */
+    --color-priority-high: #EF4444;
+    --color-priority-medium: #F59E0B;
+    --color-priority-low: #10B981;
+
+    /* Spacing Scale */
+    --spacing-xs: 0.25rem;
+    --spacing-sm: 0.5rem;
+    --spacing-md: 1rem;
+    --spacing-lg: 1.5rem;
+    --spacing-xl: 2rem;
+    --spacing-2xl: 3rem;
+
+    /* Typography */
+    --font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    --font-size-base: 16px;
+    --font-size-sm: 0.875rem;
+    --font-size-lg: 1.125rem;
+    --font-size-xl: 1.5rem;
+    --font-size-2xl: 2rem;
+
+    /* Border Radius */
+    --radius-sm: 0.25rem;
+    --radius-md: 0.5rem;
+    --radius-lg: 0.75rem;
+
+    /* Shadows */
+    --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+    --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+
+    /* Transitions */
+    --transition-fast: 150ms ease-in-out;
+    --transition-normal: 250ms ease-in-out;
+}
+
+/* ============================================
+   Base Typography & Body Styles
+   ============================================ */
+
+body {
+    font-family: var(--font-family);
+    font-size: var(--font-size-base);
+    line-height: 1.6;
+    color: var(--color-text-primary);
+    background-color: var(--color-bg-main);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+/* ============================================
+   Application Container & Layout
+   ============================================ */
+
+/* Main application wrapper */
+.app-container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: var(--spacing-lg);
+    min-height: 100vh;
+}
+
+/* ============================================
+   Header Section
+   ============================================ */
+
+.app-header {
+    text-align: center;
+    margin-bottom: var(--spacing-2xl);
+    padding: var(--spacing-xl) 0;
+}
+
+.app-header h1 {
+    font-size: var(--font-size-2xl);
+    font-weight: 700;
+    color: var(--color-primary);
+    margin-bottom: var(--spacing-sm);
+}
+
+.app-subtitle {
+    font-size: var(--font-size-lg);
+    color: var(--color-text-secondary);
+    font-weight: 400;
+}
+
+/* ============================================
+   Main Content Area
+   ============================================ */
+
+.app-main {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-xl);
+}
+
+/* ============================================
+   Task Input Section (Placeholder)
+   ============================================ */
+
+.task-input-section {
+    /* Placeholder for future add task controls */
+    /* Will be styled in a future story */
+}
+
+/* ============================================
+   Task List Container
+   ============================================ */
+
+.task-list-container {
+    background-color: var(--color-bg-card);
+    border-radius: var(--radius-lg);
+    padding: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--color-border);
+}
+
+/* ============================================
+   Empty State
+   ============================================ */
+
+.empty-state {
+    text-align: center;
+    padding: var(--spacing-2xl) var(--spacing-lg);
+    color: var(--color-text-muted);
+}
+
+.empty-state i {
+    font-size: 3rem;
+    margin-bottom: var(--spacing-md);
+    opacity: 0.5;
+}
+
+.empty-state p {
+    font-size: var(--font-size-lg);
+}
+
+/* Hidden state for empty state when tasks exist */
+.empty-state.hidden {
+    display: none;
+}
+
+/* ============================================
+   Task List
+   ============================================ */
+
+.task-list {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-md);
+}
+
+/* Hidden state for task list when empty */
+.task-list.hidden {
+    display: none;
+}
+
+/* ============================================
+   Responsive Design - Mobile & Tablet
+   ============================================ */
+
+/* Tablets and smaller laptops */
+@media (max-width: 768px) {
+    .app-container {
+        padding: var(--spacing-md);
+    }
+
+    .app-header h1 {
+        font-size: var(--font-size-xl);
+    }
+
+    .app-subtitle {
+        font-size: var(--font-size-base);
+    }
+
+    .task-list-container {
+        padding: var(--spacing-md);
+    }
+}
+
+/* Mobile phones */
+@media (max-width: 480px) {
+    .app-container {
+        padding: var(--spacing-sm);
+    }
+
+    .app-header {
+        margin-bottom: var(--spacing-lg);
+        padding: var(--spacing-lg) 0;
+    }
+
+    .empty-state {
+        padding: var(--spacing-xl) var(--spacing-sm);
+    }
+}
