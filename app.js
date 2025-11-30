@@ -32,10 +32,8 @@ document.addEventListener('DOMContentLoaded', () => {
 function initializeApp() {
     console.log('Initializing app...');
 
-    // Future implementation:
-    // - Load or create initial task data
-    // - Render the task list
-    // - Set up event listeners
+    // Render the initial task list with seeded data
+    renderTaskList();
 
     console.log('App initialization complete');
 }
@@ -163,15 +161,173 @@ let tasks = [
 ];
 
 // ============================================
-// Render Functions (Placeholder)
+// Render Functions
 // ============================================
 
-// Core render function will be implemented in the next step
-// This function will:
-// - Take the in-memory task array as input
-// - Sort tasks according to ordering rules (Pending first, then Completed, newest first)
-// - Clear and rebuild the DOM from the task data
-// - Toggle between empty state and task list view
+/**
+ * Sorts tasks according to the ordering rules:
+ * 1. Pending tasks appear before Completed tasks
+ * 2. Within each status group, tasks are sorted by createdAt descending (newest first)
+ *
+ * @param {Task[]} taskArray - Array of task objects to sort
+ * @returns {Task[]} New sorted array (does not mutate original)
+ */
+function sortTasks(taskArray) {
+    // Create a copy of the array to avoid mutating the original
+    return [...taskArray].sort((a, b) => {
+        // First priority: Sort by status (Pending before Completed)
+        if (a.status !== b.status) {
+            return a.status === 'Pending' ? -1 : 1;
+        }
+
+        // Second priority: Within same status, sort by createdAt descending (newest first)
+        return b.createdAt - a.createdAt;
+    });
+}
+
+/**
+ * Creates a DOM element for a single task
+ * Generates all necessary child elements and applies appropriate classes and attributes
+ *
+ * @param {Task} task - The task object to render
+ * @returns {HTMLLIElement} The complete task list item element
+ */
+function createTaskElement(task) {
+    // Create the main task item container
+    const taskItem = document.createElement('li');
+    taskItem.className = 'task-item';
+    taskItem.setAttribute('data-task-id', task.id);
+    taskItem.setAttribute('data-status', task.status);
+
+    // Add completed class if task is completed
+    if (task.status === 'Completed') {
+        taskItem.classList.add('task-completed');
+    }
+
+    // Create checkbox container
+    const checkboxContainer = document.createElement('div');
+    checkboxContainer.className = 'task-checkbox-container';
+
+    // Create checkbox input
+    const checkbox = document.createElement('input');
+    checkbox.type = 'checkbox';
+    checkbox.className = 'task-checkbox';
+    checkbox.checked = task.status === 'Completed';
+    // Note: Checkbox behavior will be implemented in a future story
+
+    checkboxContainer.appendChild(checkbox);
+
+    // Create content container
+    const contentContainer = document.createElement('div');
+    contentContainer.className = 'task-content';
+
+    // Create task title
+    const title = document.createElement('h3');
+    title.className = 'task-title';
+    title.textContent = task.title;
+
+    // Create task description
+    const description = document.createElement('p');
+    description.className = 'task-description';
+    description.textContent = task.description || ''; // Handle empty descriptions
+
+    // Create metadata container (priority and category)
+    const metaContainer = document.createElement('div');
+    metaContainer.className = 'task-meta';
+
+    // Create priority badge
+    const priorityBadge = document.createElement('span');
+    priorityBadge.className = `task-priority priority-${task.priority.toLowerCase()}`;
+    priorityBadge.textContent = task.priority;
+
+    // Create category badge
+    const categoryBadge = document.createElement('span');
+    categoryBadge.className = 'task-category';
+    categoryBadge.textContent = task.category;
+
+    // Append priority and category to meta container
+    metaContainer.appendChild(priorityBadge);
+    metaContainer.appendChild(categoryBadge);
+
+    // Append all content elements to content container
+    contentContainer.appendChild(title);
+    contentContainer.appendChild(description);
+    contentContainer.appendChild(metaContainer);
+
+    // Create actions container
+    const actionsContainer = document.createElement('div');
+    actionsContainer.className = 'task-actions';
+
+    // Create edit button
+    const editButton = document.createElement('button');
+    editButton.className = 'task-edit-btn';
+    editButton.innerHTML = '<i class="fas fa-edit"></i>';
+    editButton.setAttribute('aria-label', 'Edit task');
+    // Note: Edit functionality will be implemented in a future story
+
+    // Create delete button
+    const deleteButton = document.createElement('button');
+    deleteButton.className = 'task-delete-btn';
+    deleteButton.innerHTML = '<i class="fas fa-trash"></i>';
+    deleteButton.setAttribute('aria-label', 'Delete task');
+    // Note: Delete functionality will be implemented in a future story
+
+    // Append buttons to actions container
+    actionsContainer.appendChild(editButton);
+    actionsContainer.appendChild(deleteButton);
+
+    // Assemble the complete task item
+    taskItem.appendChild(checkboxContainer);
+    taskItem.appendChild(contentContainer);
+    taskItem.appendChild(actionsContainer);
+
+    return taskItem;
+}
+
+/**
+ * Main render function - Renders the task list into the DOM
+ * This function is idempotent and can be called multiple times to re-render the list
+ *
+ * @param {Task[]} taskArray - Array of tasks to render (defaults to global tasks array)
+ */
+function renderTaskList(taskArray = tasks) {
+    // Get references to DOM elements
+    const emptyStateElement = document.getElementById('empty-state');
+    const taskListElement = document.getElementById('task-list');
+
+    // Validate that required DOM elements exist
+    if (!emptyStateElement || !taskListElement) {
+        console.error('Required DOM elements not found. Cannot render task list.');
+        return;
+    }
+
+    // Clear any existing task items from the list
+    taskListElement.innerHTML = '';
+
+    // Check if the task array is empty
+    if (taskArray.length === 0) {
+        // Show empty state, hide task list
+        emptyStateElement.classList.remove('hidden');
+        taskListElement.classList.add('hidden');
+        console.log('No tasks to display - showing empty state');
+        return;
+    }
+
+    // Hide empty state, show task list
+    emptyStateElement.classList.add('hidden');
+    taskListElement.classList.remove('hidden');
+
+    // Sort tasks according to ordering rules
+    const sortedTasks = sortTasks(taskArray);
+
+    // Create and append DOM elements for each task
+    sortedTasks.forEach(task => {
+        const taskElement = createTaskElement(task);
+        taskListElement.appendChild(taskElement);
+    });
+
+    console.log(`Rendered ${sortedTasks.length} tasks successfully`);
+}
 
 // ============================================
 // Utility Functions (Placeholder)
