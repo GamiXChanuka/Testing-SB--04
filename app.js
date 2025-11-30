@@ -35,6 +35,86 @@ function initializeApp() {
     // Render the initial task list with seeded data
     renderTaskList();
 
+    // ============================================
+    // Example: Future Re-render Patterns
+    // ============================================
+    // The following commented examples illustrate how future stories will
+    // modify the task array and trigger re-renders of the UI.
+    // These patterns will be used when implementing add, edit, delete, and
+    // toggle completion features in subsequent user stories.
+
+    /* Example 1: Adding a new task
+    // Create a new task object following the Task typedef structure
+    const newTask = {
+        id: Date.now(), // Use timestamp as unique ID
+        title: 'New Task Example',
+        description: 'This demonstrates adding a task to the array',
+        priority: 'Medium',
+        category: 'Personal',
+        status: 'Pending',
+        createdAt: Date.now(),
+        completedAt: null
+    };
+
+    // Add the new task to the tasks array
+    tasks.push(newTask);
+
+    // Re-render the task list to reflect the changes
+    renderTaskList();
+    console.log('Added new task and re-rendered');
+    */
+
+    /* Example 2: Removing a task by ID
+    // Remove a task from the array (e.g., delete task with id 3)
+    const taskIdToRemove = 3;
+    tasks = tasks.filter(task => task.id !== taskIdToRemove);
+
+    // Re-render the task list to reflect the changes
+    renderTaskList();
+    console.log(`Removed task ${taskIdToRemove} and re-rendered`);
+    */
+
+    /* Example 3: Updating a task (e.g., marking as completed)
+    // Find a task by ID and update its properties
+    const taskIdToComplete = 1;
+    const taskToUpdate = tasks.find(task => task.id === taskIdToComplete);
+
+    if (taskToUpdate) {
+        // Update task status and completion timestamp
+        taskToUpdate.status = 'Completed';
+        taskToUpdate.completedAt = Date.now();
+
+        // Re-render the task list to reflect the changes
+        renderTaskList();
+        console.log(`Updated task ${taskIdToComplete} to completed and re-rendered`);
+    }
+    */
+
+    /* Example 4: Modifying task properties (e.g., changing priority)
+    // Find and modify a task's priority level
+    const taskIdToModify = 2;
+    const taskToModify = tasks.find(task => task.id === taskIdToModify);
+
+    if (taskToModify) {
+        taskToModify.priority = 'High';
+        taskToModify.title = 'Updated: ' + taskToModify.title;
+
+        // Re-render the task list to reflect the changes
+        renderTaskList();
+        console.log(`Modified task ${taskIdToModify} and re-rendered`);
+    }
+    */
+
+    /* Example 5: Clearing all completed tasks
+    // Filter out all completed tasks
+    const completedCount = tasks.filter(task => task.status === 'Completed').length;
+    tasks = tasks.filter(task => task.status === 'Pending');
+
+    // Re-render the task list to reflect the changes
+    renderTaskList();
+    console.log(`Removed ${completedCount} completed tasks and re-rendered`);
+    */
+
     console.log('App initialization complete');
 }
 
